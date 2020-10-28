@@ -1,0 +1,91 @@
+/* UC1 -- Create Payroll_Service Database */
+
+create database payroll_service
+show databases;
+use payroll_service
+
+------------------------------------------------------------------
+
+/* UC2 -- Create Employee_Payroll Table */
+
+create table employee_payroll (
+	id int unsigned not null auto_increment,
+	name varchar(50) not null,
+	salary double not null,
+	start date not null,
+	primary key (id)
+);
+
+-------------------------------------------------------------------
+
+/* UC3 -- CRUD Operations */
+
+insert into employee_payroll (name, salary, start) values
+('Abhishek', 100000.0, '2017-12-28'),
+('Sumit', 150500.0, '2018-11-04'),
+('Prajwal', 120000.20, '2019-03-28'),
+('Aditya', 175000.50, '2019-05-21');
+
+---------------------------------------------------------------------
+
+/* UC4 -- Retrieve all the employee payroll data */
+
+select * from employee_payroll;
+
+---------------------------------------------------------------------
+
+/* UC5 -- Retrieve salary for a particular employee and for employees
+ joined  in a particular date range */
+
+select salary
+from employee_payroll
+where name = 'Abhishek'
+
+select *
+from employee_payroll
+where start between cast ( '2019-01-01' as date ) and date (now());
+
+-----------------------------------------------------------------------
+
+/* UC6 -- Add Gender column and update rows */
+
+ alter table employee_payroll add gender char(1) after name;
+
+update employee_payroll
+set gender = 'M';
+
+insert into employee_payroll (name, salary, start) value
+('Sanjana', 140500.40, '2018-04-30');
+
+update employee_payroll
+set gender = 'F'
+where name = 'Sanjana';
+
+------------------------------------------------------------------------
+
+/* UC7 -- Sum, Average, Min, Max and Count based on gender */
+
+select sum(salary)
+from employee_payroll
+group by gender;
+
+select avg(salary)
+from employee_payroll
+group by gender;
+
+select gender, min(salary)
+from employee_payroll
+group by gender;
+
+select gender, max(salary)
+from employee_payroll
+group by gender;
+
+select gender, count(gender)
+from employee_payroll
+group by gender;
+
+---------------------------------------------------------------------------
+
+
+
